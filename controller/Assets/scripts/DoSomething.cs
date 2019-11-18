@@ -16,18 +16,10 @@ public class DoSomething : MonoBehaviour
     // シリアル通信のクラス、クラス名は正しく書くこと
     public SerialHandler serialHandler;
 
-    void TryParseByte(string message, int startIndex, int length)   //試作中
-    {
-        string receivedData;
-        receivedData = message.Substring(5, 1);
-        byte sw;
-        byte.TryParse(receivedData, out sw);
-    }
-
     void Start()
     {
         // 制御対象のオブジェクトを取得
-        targetObject = GameObject.Find("Player");
+        targetObject = GameObject.Find("スティック左");
         // 制御対象に関連付けられたスクリプトを取得、一般的にはこのスクリプトのメンバにアクセスして処理をすることが多いと思うので。
         targetScript = targetObject.GetComponent<playerController>();
 
@@ -49,34 +41,43 @@ public class DoSomething : MonoBehaviour
             return;
 
         // 受け取ったデータを数値に変換
-        if (message[0] == 'S' && message[message.Length - 1] == 'E')
+        if (message[0] == 'S' && message[1] == 'A' && message[message.Length - 1] == 'E')
         {
             #region 必要に応じて変更すべき箇所
 
-            string receivedData;
-
             // 必要な文字部分のバイト数（範囲）は常に把握する
-            receivedData = message.Substring(1, 4);
-            Debug.Log(receivedData);
+            string receivedData = message.Substring(1, 16);
+            Debug.Log("allAccelData : " + receivedData);
 
-            int vol;
-            int.TryParse(receivedData, out vol);
-
-            receivedData = message.Substring(5, 1);
-            byte sw0;
-            byte.TryParse(receivedData, out sw0);
-
-            receivedData = message.Substring(6, 1);
-            byte sw1;
-            byte.TryParse(receivedData, out sw1);
-
-            targetScript.vol = vol;
-            targetScript.sw[0] = sw0;
-            targetScript.sw[1] = sw1;
+            targetScript.accel[0] = DecodeFloat(2, 5);
+            targetScript.accel[1] = DecodeFloat(7, 5);
+            targetScript.accel[2] = DecodeFloat(12, 5);
             // 必要な文字部分を抽出したら、データ形式に合わせてデコード、例えば以下のように。
             //float.TryParse(receivedData, out data);
 
             #endregion
+        }
+        if (message[0] == 'S' && message[1] == 'G' && message[message.Length - 1] == 'E')
+        {
+            string receivedData = message.Substring(1, 13);
+            Debug.Log("allGyroData : " + receivedData);
+
+            targetScript.gyro[0] = DecodeFloat(2, 4);
+            targetScript.gyro[1] = DecodeFloat(6, 4);
+            targetScript.gyro[2] = DecodeFloat(10, 4);
+        }
+
+        float DecodeFloat(int start, int range)
+        {
+            string receivedData;
+
+            receivedData = message.Substring(start, range);
+            Debug.Log(receivedData);
+
+            float vol;
+            float.TryParse(receivedData, out vol);
+
+            return vol;
         }
     }
 }
