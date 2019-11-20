@@ -30,6 +30,49 @@ public class DoSomething : MonoBehaviour
     void Update()
     {
         //文字列を送信するなら例えばココ
+        if (targetScript.jklPress[0])
+        {
+            targetScript.jklPress[0] = false;
+            if (targetScript.jklToggle[0])
+            {
+                //LED ON
+                serialHandler.Write("a");
+            }
+            else
+            {
+                //LED OFF
+                serialHandler.Write("b");
+            }
+        }
+        if (targetScript.jklPress[1])
+        {
+            targetScript.jklPress[1] = false;
+            if (targetScript.jklToggle[1])
+            {
+                //LED ON
+                serialHandler.Write("c");
+            }
+            else
+            {
+                //LED OFF
+                serialHandler.Write("d");
+            }
+        }
+        if (targetScript.jklPress[2])
+        {
+            targetScript.jklPress[2] = false;
+            if (targetScript.jklToggle[2])
+            {
+                //LED ON
+                serialHandler.Write("e");
+            }
+            else
+            {
+                //LED OFF
+                serialHandler.Write("f");
+            }
+        }
+
         //serialHandler.Write("hogehoge");
     }
 

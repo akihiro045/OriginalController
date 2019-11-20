@@ -18,15 +18,22 @@ public class playerController : MonoBehaviour
     private float[] oldAccel = new float[3];
     private float[] oldGyro = new float[3];
 
+    public bool[] jklPress = new bool[3];
+    public bool[] jklToggle = new bool[3];
+    float startTime;
+
     void PlayerMove()
     {
         float[] tmpAccel = new float[3];
+        float[] tmpGyro = new float[3];
         for (int i = 0; i < 3; i++)
         {
             tmpAccel[i] = oldAccel[i] - accel[i];
+            tmpGyro[i] = oldGyro[i] - gyro[i];
         }
 
-        this.transform.position += new Vector3(tmpAccel[0], tmpAccel[1], tmpAccel[2]);
+        //this.transform.position += new Vector3(tmpAccel[0], tmpAccel[1], tmpAccel[2]);
+        //this.transform.rotation = Quaternion.Euler(90 + this.transform.rotation.x + gyro[0], this.transform.rotation.y + gyro[2], this.transform.rotation.z + gyro[1]);
 
         if (Input.GetKey(KeyCode.UpArrow))
             this.transform.position += new Vector3(0f, 0f, moveValue);
@@ -43,6 +50,38 @@ public class playerController : MonoBehaviour
             GetComponent<Rigidbody>().velocity = Vector3.up * jumpValue;
         }
 
+        if (Input.GetKeyDown(KeyCode.J))
+        {
+            jklPress[0] = true;
+            jklToggle[0] = !jklToggle[0];
+        }
+        if (Input.GetKeyDown(KeyCode.K))
+        {
+            jklPress[1] = true;
+            jklToggle[1] = true;
+        }
+        if (Input.GetKeyUp(KeyCode.K))//Jkeyの２回目の操作と同じ原理
+        {
+            jklPress[1] = true;
+            jklToggle[1] = false;
+        }
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            jklPress[2] = true;
+            jklToggle[2] = true;
+            startTime = 0;//計測開始
+        }
+        if (startTime >= 0)
+        {
+            startTime += Time.deltaTime;
+            if (startTime >= 3)
+            {
+                jklPress[2] = true;
+                jklToggle[2] = false;
+                startTime = -1;
+            }
+        }
+        Debug.Log(startTime);
     }
 
     void DebugText()
@@ -69,6 +108,13 @@ public class playerController : MonoBehaviour
             oldAccel[i] = 0;
             oldGyro[i] = 0;
         }
+
+        for (int n = 0; n < 3; n++)
+        {
+            jklPress[n] = false;
+            jklToggle[n] = false;
+        }
+        startTime = -1;
     }
 
     // Update is called once per frame

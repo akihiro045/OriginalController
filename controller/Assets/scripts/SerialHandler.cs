@@ -16,7 +16,7 @@ public class SerialHandler : MonoBehaviour
 
     // COM10以上は\\\\.\\を付加しないと開けない。
     // portNameに直接代入するとなぜか失敗するので、ここでいったん別の変数に代入
-    string myPortName = "\\\\.\\COM18";
+    string myPortName = "\\\\.\\COM13";
     public int baudRate = 115200;    //arduinoと合わせる
 
     public string portName;
