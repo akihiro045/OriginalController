@@ -13,6 +13,7 @@ public class DoSomething : MonoBehaviour
     GameObject targetObject;
     playerController targetScript;
 
+
     // シリアル通信のクラス、クラス名は正しく書くこと
     public SerialHandler serialHandler;
 

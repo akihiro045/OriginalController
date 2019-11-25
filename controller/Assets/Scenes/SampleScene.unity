@@ -1091,13 +1091,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 647083668}
-  m_LocalRotation: {x: 0.64793485, y: -0.29158178, z: 0.29592404, w: 0.6384274}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.005000001, y: 0.083952084, z: 0.005000004}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -1.16, y: 1.73, z: -8.7}
+  m_LocalScale: {x: 1, y: 1.8, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 21
-  m_LocalEulerAnglesHint: {x: 90.846985, y: 0, z: -0.000015258789}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &647083673
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1123,9 +1123,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aba3948b8270e5a46897a99ad9bb4c78, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  jumpValue: 5
   textInfoAccel: {fileID: 173572020}
   textInfoGyro: {fileID: 794337175}
+  Stick: []
   accel:
   - 0
   - 0
@@ -1134,6 +1134,8 @@ MonoBehaviour:
   - 0
   - 0
   - 0
+  jklPress: 000000
+  jklToggle: 000000
 --- !u!54 &647083675
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1581,7 +1583,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
   m_LocalRotation: {x: 0.2588191, y: 0, z: 0, w: 0.9659258}
-  m_LocalPosition: {x: 0, y: 3.897, z: -10.497}
+  m_LocalPosition: {x: 0, y: 5.38, z: -13.06}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -1810,7 +1812,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1072794420}
   m_LocalRotation: {x: -0.048757624, y: -0.0015666137, z: -0.0532308, w: 0.99739}
-  m_LocalPosition: {x: -1.16, y: 1.734, z: -8.07}
+  m_LocalPosition: {x: -1.157, y: 1.859, z: -6.79}
   m_LocalScale: {x: 1, y: 0.048551712, z: 1}
   m_Children:
   - {fileID: 1145389553}
@@ -2482,12 +2484,12 @@ GameObject:
   - component: {fileID: 1538107830}
   - component: {fileID: 1538107829}
   m_Layer: 0
-  m_Name: "\u30B9\u30C6\u30A3\u30C3\u30AFmigi "
+  m_Name: "\u30B9\u30C6\u30A3\u30C3\u30AF\u53F3"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!136 &1538107829
 CapsuleCollider:
   m_ObjectHideFlags: 0
