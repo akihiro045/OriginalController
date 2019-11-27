@@ -20,7 +20,7 @@ public class DoSomething : MonoBehaviour
     void Start()
     {
         // 制御対象のオブジェクトを取得
-        targetObject = GameObject.Find("スティック左");
+        targetObject = GameObject.Find("スティック右");
         // 制御対象に関連付けられたスクリプトを取得、一般的にはこのスクリプトのメンバにアクセスして処理をすることが多いと思うので。
         targetScript = targetObject.GetComponent<playerController>();
 
@@ -91,7 +91,7 @@ public class DoSomething : MonoBehaviour
 
             // 必要な文字部分のバイト数（範囲）は常に把握する
             string receivedData = message.Substring(1, 16);
-            Debug.Log("allAccelData : " + receivedData);
+            //Debug.Log("allAccelData : " + receivedData);
 
             targetScript.accel[0] = DecodeFloat(2, 5);
             targetScript.accel[1] = DecodeFloat(7, 5);
@@ -104,7 +104,7 @@ public class DoSomething : MonoBehaviour
         if (message[0] == 'S' && message[1] == 'G' && message[message.Length - 1] == 'E')
         {
             string receivedData = message.Substring(1, 13);
-            Debug.Log("allGyroData : " + receivedData);
+            //Debug.Log("allGyroData : " + receivedData);
 
             targetScript.gyro[0] = DecodeFloat(2, 4);
             targetScript.gyro[1] = DecodeFloat(6, 4);
@@ -116,7 +116,7 @@ public class DoSomething : MonoBehaviour
             string receivedData;
 
             receivedData = message.Substring(start, range);
-            Debug.Log(receivedData);
+            //Debug.Log("receivedData:" + receivedData);
 
             float vol;
             float.TryParse(receivedData, out vol);

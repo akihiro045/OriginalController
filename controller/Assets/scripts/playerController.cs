@@ -3,6 +3,19 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+struct accel
+{
+    public float x { get; set; }
+    public float y { get; set; }
+    public float z { get; set; }
+}
+
+struct gyro
+{
+    public float x { get; set; }
+    public float y { get; set; }
+    public float z { get; set; }
+}
 
 public class playerController : MonoBehaviour
 {
@@ -13,7 +26,6 @@ public class playerController : MonoBehaviour
 
     private float[] firstPosition = new float[3];
     private float[] firstRotation = new float[3];
-    private Vector3 firstrotation;
     public float[] accel = new float[3];
     public float[] gyro = new float[3];
 
@@ -24,30 +36,23 @@ public class playerController : MonoBehaviour
     public bool[] jklToggle = new bool[3];
     float startTime;
 
+    float[] deltaTime = new float[3];
+    float[] velocityGyro = new float[3];
+    float[] velocityAccel = new float[3];
+
     void PlayerMove()
     {
-        float[] tmpAccel = new float[3];
-        float[] tmpGyro = new float[3];
-        for (int i = 0; i < 3; i++)
-        {
-            tmpAccel[i] = oldAccel[i] - accel[i];
-            tmpGyro[i] = oldGyro[i] - gyro[i];
-        }
 
-        //this.transform.position += new Vector3(tmpAccel[0], tmpAccel[2], tmpAccel[1]);
-        this.transform.rotation = Quaternion.Euler(firstRotation[0] + gyro[0], /*firstRotation[1] + gyro[1], firstRotation[2] - gyro[2]*/0, 0);
-        // if (tmpAccel[0] > 2 || tmpAccel[0] < -2)
-        // {
-        //     this.transform.position += new Vector3(tmpAccel[0], 0.0f, 0.0f);
-        // }
-        // if (tmpAccel[1] > 2 || tmpAccel[1] < -2)
-        // {
-        //     this.transform.position += new Vector3(0.0f, 0.0f, tmpAccel[1]);
-        // }
-        // if (tmpAccel[2] > 10 || tmpAccel[2] < 9)
-        // {
-        //     this.transform.position += new Vector3(0.0f, tmpAccel[2], 0.0f);
-        // }
+
+        this.transform.position = new Vector3(-VelocityAccel(oldAccel, accel, velocityAccel, 0),
+                                            VelocityAccel(oldAccel, accel, velocityAccel, 2),
+                                            VelocityAccel(oldAccel, accel, velocityAccel, 1) * 100);
+        // this.transform.position = new Vector3(0, VelocityAccel(oldAccel, accel, velocityAccel, 2), 0);
+        // this.transform.position = new Vector3(0, 0, VelocityAccel(oldAccel, accel, velocityAccel, 1));
+
+        // this.transform.rotation = Quaternion.Euler(firstRotation[0] + VelocityGyro(oldGyro, gyro, velocityGyro, 0),
+        //                                     firstRotation[1] - VelocityGyro(oldGyro, gyro, velocityGyro, 2),
+        //                                     0);
         // if (Input.GetKey(KeyCode.UpArrow))
         //     this.transform.position += new Vector3(0f, 0f, moveValue);
         // if (Input.GetKey(KeyCode.DownArrow))
@@ -94,9 +99,19 @@ public class playerController : MonoBehaviour
                 startTime = -1;
             }
         }
-        Debug.Log(startTime);
     }
-
+    float VelocityGyro(float[] oldGyro, float[] gyro, float[] velocity, int num)
+    {
+        velocity[num] += ((gyro[num] + oldGyro[num]) / 2) * Time.deltaTime;
+        oldGyro[num] = gyro[num];
+        return velocity[num];
+    }
+    float VelocityAccel(float[] oldAccel, float[] accel, float[] velocity, int num)
+    {
+        velocity[num] = ((accel[0] + oldAccel[0]) / 2) * Time.deltaTime;
+        oldAccel[num] = accel[num];
+        return velocity[num];
+    }
     void DebugText()
     {
         //str = string.Format("{0:F2}, {1:F2}, {2:F2}", this.transform.position.x, this.transform.position.y, this.transform.position.z);
@@ -117,6 +132,8 @@ public class playerController : MonoBehaviour
 
             oldAccel[i] = 0;
             oldGyro[i] = 0;
+
+            deltaTime[i] = 0;
         }
 
         for (int n = 0; n < 3; n++)
@@ -142,5 +159,10 @@ public class playerController : MonoBehaviour
 
         DebugText();
 
+        for (int i = 0; i < 3; i++)
+        {
+            deltaTime[i] = Time.deltaTime;
+        }
+        oldGyro[0] = gyro[0];
     }
 }
