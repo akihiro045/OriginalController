@@ -30,21 +30,26 @@ public class DoSomething : MonoBehaviour
 
     void Update()
     {
-        //文字列を送信するなら例えばココ
-        if (targetScript.jklPress[0])
+        if (targetScript.weekHit)
         {
-            targetScript.jklPress[0] = false;
-            if (targetScript.jklToggle[0])
-            {
-                //LED ON
-                serialHandler.Write("a");
-            }
-            else
-            {
-                //LED OFF
-                serialHandler.Write("b");
-            }
+            targetScript.weekHit = false;
+            serialHandler.Write("a");
         }
+        //文字列を送信するなら例えばココ
+        // if (targetScript.jklPress[0])
+        // {
+        //     targetScript.jklPress[0] = false;
+        //     if (targetScript.jklToggle[0])
+        //     {
+        //         //LED ON
+        //         serialHandler.Write("a");
+        //     }
+        //     else
+        //     {
+        //         //LED OFF
+        //         serialHandler.Write("b");
+        //     }
+        // }
         if (targetScript.jklPress[1])
         {
             targetScript.jklPress[1] = false;
@@ -103,12 +108,11 @@ public class DoSomething : MonoBehaviour
         }
         if (message[0] == 'S' && message[1] == 'G' && message[message.Length - 1] == 'E')
         {
-            string receivedData = message.Substring(1, 13);
+            string receivedData = message.Substring(1, 8);
             //Debug.Log("allGyroData : " + receivedData);
 
             targetScript.gyro[0] = DecodeFloat(2, 4);
             targetScript.gyro[1] = DecodeFloat(6, 4);
-            targetScript.gyro[2] = DecodeFloat(10, 4);
         }
 
         float DecodeFloat(int start, int range)

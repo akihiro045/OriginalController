@@ -1020,7 +1020,7 @@ GameObject:
   - component: {fileID: 647083675}
   m_Layer: 0
   m_Name: "\u30B9\u30C6\u30A3\u30C3\u30AF\u5DE6"
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1136,6 +1136,7 @@ MonoBehaviour:
   - 0
   jklPress: 000000
   jklToggle: 000000
+  weekHit: 0
 --- !u!54 &647083675
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1583,7 +1584,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
   m_LocalRotation: {x: 0.2588191, y: 0, z: 0, w: 0.9659258}
-  m_LocalPosition: {x: 0, y: 5.38, z: -13.06}
+  m_LocalPosition: {x: -0.53, y: 3.16, z: -9.22}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -1740,7 +1741,7 @@ GameObject:
   - component: {fileID: 1072794421}
   m_Layer: 0
   m_Name: "\u30B9\u30CD\u30A2"
-  m_TagString: Untagged
+  m_TagString: tom
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1952,7 +1953,7 @@ CapsuleCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1145389552}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   m_Radius: 0.5000001
   m_Height: 2
@@ -2488,7 +2489,7 @@ GameObject:
   - component: {fileID: 1538107835}
   m_Layer: 0
   m_Name: "\u30B9\u30C6\u30A3\u30C3\u30AF\u53F3"
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2559,13 +2560,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1538107828}
-  m_LocalRotation: {x: 0.0683107, y: -0.23316602, z: -0.2377027, w: 0.94045985}
-  m_LocalPosition: {x: 0.12701148, y: 3.7477, z: -10.088996}
+  m_LocalRotation: {x: 0.6845513, y: -0.17717089, z: 0.17717089, w: 0.6845513}
+  m_LocalPosition: {x: -0.54, y: 1.991, z: -7.61}
   m_LocalScale: {x: 0.1, y: 1, z: 0.1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 22
-  m_LocalEulerAnglesHint: {x: 1.011, y: 20.987001, z: -28.622002}
+  m_LocalEulerAnglesHint: {x: 90, y: -29.021002, z: 0}
 --- !u!114 &1538107833
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2604,6 +2605,7 @@ MonoBehaviour:
   - 0
   jklPress: 000000
   jklToggle: 000000
+  weekHit: 0
 --- !u!54 &1538107835
 Rigidbody:
   m_ObjectHideFlags: 0

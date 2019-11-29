@@ -36,37 +36,27 @@ public class playerController : MonoBehaviour
     public bool[] jklToggle = new bool[3];
     float startTime;
 
-    float[] deltaTime = new float[3];
     float[] velocityGyro = new float[3];
     float[] velocityAccel = new float[3];
 
+    public bool weekHit = false;
+
+    private void OnCollisionEnter(Collision other)
+    {
+        weekHit = true;
+        Debug.Log("hit");
+    }
     void PlayerMove()
     {
-
-
-        this.transform.position = new Vector3(-VelocityAccel(oldAccel, accel, velocityAccel, 0),
-                                            VelocityAccel(oldAccel, accel, velocityAccel, 2),
-                                            VelocityAccel(oldAccel, accel, velocityAccel, 1) * 100);
+        this.transform.position = new Vector3(firstPosition[0], //- VelocityAccel(oldAccel, accel, velocityAccel, 0),
+                                              firstPosition[1], //+ VelocityAccel(oldAccel, accel, velocityAccel, 2),
+                                            firstPosition[2] + VelocityAccel(oldAccel, accel, velocityAccel, 1) * 100);
         // this.transform.position = new Vector3(0, VelocityAccel(oldAccel, accel, velocityAccel, 2), 0);
         // this.transform.position = new Vector3(0, 0, VelocityAccel(oldAccel, accel, velocityAccel, 1));
 
-        // this.transform.rotation = Quaternion.Euler(firstRotation[0] + VelocityGyro(oldGyro, gyro, velocityGyro, 0),
-        //                                     firstRotation[1] - VelocityGyro(oldGyro, gyro, velocityGyro, 2),
-        //                                     0);
-        // if (Input.GetKey(KeyCode.UpArrow))
-        //     this.transform.position += new Vector3(0f, 0f, moveValue);
-        // if (Input.GetKey(KeyCode.DownArrow))
-        //     this.transform.position += new Vector3(0f, 0f, -moveValue);
-
-        // if (Input.GetKey(KeyCode.LeftArrow))
-        //     this.transform.position += new Vector3(-moveValue, 0f, 0f);
-        // if (Input.GetKey(KeyCode.RightArrow))
-        //     this.transform.position += new Vector3(moveValue, 0f, 0f);
-
-        // if (Input.GetKeyDown(KeyCode.Z))
-        // {
-        //     GetComponent<Rigidbody>().velocity = Vector3.up * jumpValue;
-        // }
+        this.transform.rotation = Quaternion.Euler(firstRotation[0] + VelocityGyro(oldGyro, gyro, velocityGyro, 0), firstRotation[1], firstRotation[2]);
+        // firstRotation[1] - VelocityGyro(oldGyro, gyro, velocityGyro, 2),
+        // 0);
 
         if (Input.GetKeyDown(KeyCode.J))
         {
@@ -132,8 +122,6 @@ public class playerController : MonoBehaviour
 
             oldAccel[i] = 0;
             oldGyro[i] = 0;
-
-            deltaTime[i] = 0;
         }
 
         for (int n = 0; n < 3; n++)
@@ -142,10 +130,17 @@ public class playerController : MonoBehaviour
             jklToggle[n] = false;
         }
         startTime = -1;
+        firstPosition[0] = this.transform.position.x;
+        firstPosition[1] = this.transform.position.y;
+        firstPosition[2] = this.transform.position.z;
+        Debug.Log("firstPosition x:" + firstPosition[0]);
+        Debug.Log("firstPosition y:" + firstPosition[1]);
+        Debug.Log("firstPosition z:" + firstPosition[2]);
 
-        firstRotation[0] = 270 + gyro[0];
-        firstRotation[1] = gyro[2];
-        firstRotation[2] = gyro[1];
+
+        firstRotation[0] = this.transform.eulerAngles.x;
+        firstRotation[1] = this.transform.eulerAngles.y;
+        firstRotation[2] = this.transform.eulerAngles.z;
         Debug.Log("firstRotation x:" + firstRotation[0]);
         Debug.Log("firstRotation y:" + firstRotation[1]);
         Debug.Log("firstRotation z:" + firstRotation[2]);
@@ -159,10 +154,6 @@ public class playerController : MonoBehaviour
 
         DebugText();
 
-        for (int i = 0; i < 3; i++)
-        {
-            deltaTime[i] = Time.deltaTime;
-        }
         oldGyro[0] = gyro[0];
     }
 }
