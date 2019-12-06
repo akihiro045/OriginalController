@@ -9,7 +9,6 @@ struct accel
     public float y { get; set; }
     public float z { get; set; }
 }
-
 struct gyro
 {
     public float x { get; set; }
@@ -39,22 +38,35 @@ public class playerController : MonoBehaviour
     float[] velocityGyro = new float[3];
     float[] velocityAccel = new float[3];
 
-    public bool weekHit = false;
+    public bool weekHit;
+    public bool strongHit;
 
     private void OnCollisionEnter(Collision other)
     {
-        weekHit = true;
-        Debug.Log("hit");
+        //2つの音
+        if (gyro[0] > 80 || gyro[0] < -80)
+        {
+            strongHit = true;
+        }
+        else
+        {
+            weekHit = true;
+        }
+        //other.rigidbody.isKinematic = true;
+        Debug.Log(other.gameObject);
+    }
+    private void OnCollisionExit(Collision other)
+    {
+        //other.rigidbody.isKinematic = false;
     }
     void PlayerMove()
     {
         this.transform.position = new Vector3(firstPosition[0], //- VelocityAccel(oldAccel, accel, velocityAccel, 0),
                                               firstPosition[1], //+ VelocityAccel(oldAccel, accel, velocityAccel, 2),
-                                            firstPosition[2] + VelocityAccel(oldAccel, accel, velocityAccel, 1) * 100);
+                                            firstPosition[2] /*+ VelocityAccel(oldAccel, accel, velocityAccel, 1) * 100*/);
         // this.transform.position = new Vector3(0, VelocityAccel(oldAccel, accel, velocityAccel, 2), 0);
         // this.transform.position = new Vector3(0, 0, VelocityAccel(oldAccel, accel, velocityAccel, 1));
-
-        this.transform.rotation = Quaternion.Euler(firstRotation[0] + VelocityGyro(oldGyro, gyro, velocityGyro, 0), firstRotation[1], firstRotation[2]);
+        MoveGyro();
         // firstRotation[1] - VelocityGyro(oldGyro, gyro, velocityGyro, 2),
         // 0);
 
@@ -90,6 +102,29 @@ public class playerController : MonoBehaviour
             }
         }
     }
+
+    void MoveGyro()
+    {
+        //センサーのxが反転しているとき
+        if (accel[2] > 0)
+        {
+            this.transform.rotation = Quaternion.Euler(firstRotation[0] + VelocityGyro(oldGyro, gyro, velocityGyro, 0), firstRotation[1], firstRotation[2]);
+        }
+        else
+        {
+            this.transform.rotation = Quaternion.Euler(firstRotation[0] - VelocityGyro(oldGyro, gyro, velocityGyro, 0), firstRotation[1], firstRotation[2]);
+        }
+
+        // if (accel[0] >0)
+        // {
+        //     this.transform.rotation = Quaternion.Euler(firstRotation[0] + VelocityGyro(oldGyro, gyro, velocityGyro, 2), firstRotation[1], firstRotation[2]);
+        // }
+        // else if(accel[0]<0)
+        // {
+
+        // }
+    }
+
     float VelocityGyro(float[] oldGyro, float[] gyro, float[] velocity, int num)
     {
         velocity[num] += ((gyro[num] + oldGyro[num]) / 2) * Time.deltaTime;
@@ -111,6 +146,11 @@ public class playerController : MonoBehaviour
         textInfoGyro.text = str;
     }
 
+    private void Awake()
+    {
+        weekHit = false;
+        strongHit = false;
+    }
     void Start()
     {
         DebugText();
